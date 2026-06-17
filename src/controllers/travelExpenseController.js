@@ -93,4 +93,31 @@ const updateTravelExpense = async (req, res) => {
 };
 
 
-module.exports = {createTravelExpense, getTravelExpenses, getTravelExpenseById, updateTravelExpense,};
+const deleteTravelExpenses = async (req, res) => {
+    try{
+        const travelExpense = await TravelExpense.findByIdAndDelete(req.params.id);
+
+        if(!travelExpense) {
+           return res.status(404).json({
+            success: false,
+            message: "Travel expense not found",
+            data: null,                                         /// agar travel expense ki id match nahi hui to fail honga
+        });   
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Travel expense deleted succesfully",
+            data: travelExpense,                                      /// agar suuces hua toh
+        });                    
+    }  catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message,
+            data: null,                                         /// agar fail hua toh
+        });  
+    }
+}
+
+
+module.exports = {createTravelExpense, getTravelExpenses, getTravelExpenseById, updateTravelExpense, deleteTravelExpenses,};
