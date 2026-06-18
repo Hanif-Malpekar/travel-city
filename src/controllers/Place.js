@@ -163,5 +163,37 @@ const getPlaceById = async (req, res) => {
   }
 };
 
+const updatePlaceById = async (req, res) => {
+  try {
+    const id  = req.params.id;        
+    const updateData = req.body;      
+
+    const updatedPlace = await Place.findByIdAndUpdate(id, { $set: updateData }, {new:true})
+      .populate("city")
+      .populate("country");
+
+      console.log("aaaaaaaaa", updatedPlace)
+
+    if (!updatedPlace) {
+      return res.status(404).send({
+        success: false,
+        message: "Place not found"
+      });
+    }
+
+    return res.status(200).send({
+      success: true,
+      message: "Place updated successfully!",
+    });
+
+  } catch (error) {
+    console.log("Error in updating place", error);
+    return res.status(500).send({
+      success: false,
+      message: "Server error",
+    });
+  }
+};
+
 module.exports = 
-{addPlace, getPlace, getPlaceById}
+{addPlace, getPlace, getPlaceById, updatePlaceById}

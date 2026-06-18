@@ -5,5 +5,6 @@ const placeController = require("../controllers/Place")
 route.post("/add",placeController.addPlace)
 route.get("/get",placeController.getPlace)
 route.get("/get/:id",placeController.getPlaceById)
+route.patch("/update/:id",placeController.updatePlaceById)
 
 module.exports = route
