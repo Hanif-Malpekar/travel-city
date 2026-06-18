@@ -58,8 +58,30 @@ const addMosque = async (req, res) => {
             return res.status(200).send(sendRes)
         }
     } catch (error) {
-        console.log("Errro in adding Mosque", error)
+        console.log("Error in adding Mosque", error)
         return res.status(500).send(sendRes)
     }
 }
-module.exports = {addMosque}
+
+const getMosques = async (req, res) => {
+    try {
+        const mosques = await mosque.find()
+            .populate("city")
+            .populate("country");
+
+        return res.status(200).send({
+            success: true,
+            message: "Mosques fetched successfully",
+            data: mosques
+        });
+    } catch (error) {
+        console.log("Error fetching mosques:", error);
+
+        return res.status(500).send({
+            success: false,
+            message: error.message,
+            data: null
+        });
+    }
+};
+module.exports = {addMosque,getMosques}

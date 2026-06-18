@@ -1,5 +1,8 @@
 require('dotenv').config();
 require('./src/models/db');
+require('./src/models/Country');
+require('./src/models/City');
+require('./src/models/Mosque');
 
 const express = require('express');
 const cors = require('cors');
