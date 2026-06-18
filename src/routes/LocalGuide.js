@@ -6,6 +6,6 @@ const localGuideController = require("../controller/LocalGuide")
 
 route.post("/add", localGuideController.addLocalGuide)
 
-
+route.get("/get", localGuideController.getAllLocalGuides)
 
 module.exports = route

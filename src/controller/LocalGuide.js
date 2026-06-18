@@ -1,5 +1,6 @@
 const LocalGuide = require('../models/LocalGuide')
-
+const City = require('../models/City')
+const User = require('../models/User')
 // add
 const addLocalGuide = async (req, res) => {
     try {
@@ -76,10 +77,51 @@ const addLocalGuide = async (req, res) => {
         return res.status(500).send(giveRes)
     }
 }
+const getAllLocalGuides = async (req, res) => {
+    let giveRes = {
+        success: false,
+        message: "Something went wrong",
+        data: null
+    }
 
+    try {
+        let localGuideDetails = req.body
+
+        let filterLocalGuide = {}
+
+        if (localGuideDetails.user) {
+            filterLocalGuide.user = localGuideDetails.user
+        }
+
+        if (localGuideDetails.city) {
+            filterLocalGuide.city = localGuideDetails.city
+        }
+         if (localGuideDetails.languages) {
+            filterLocalGuide.languages = localGuideDetails.languages
+        }
+
+        let localGuideDbRes = await LocalGuide.find(filterLocalGuide)
+            
+
+        giveRes.success = true
+        giveRes.message = "Local Guides fetched successfully!"
+        giveRes.data = localGuideDbRes
+
+        return res.status(200).send(giveRes)
+
+    } catch (error) {
+        console.log("Error in getting Local Guides", error)
+
+        giveRes.success = false
+        giveRes.message = error.message
+
+        return res.status(500).send(giveRes)
+    }
+}
 
 
 module.exports = {
   addLocalGuide,
+  getAllLocalGuides,
  
 }
