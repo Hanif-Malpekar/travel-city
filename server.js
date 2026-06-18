@@ -1,5 +1,6 @@
 require('dotenv').config();
 require('./src/models/db');
+const userRoutes = require('./src/routes/User');
 
 const express = require('express');
 const cors = require('cors');
@@ -30,7 +31,7 @@ app.get('/api/health', (req, res) => {
 
 // TODO: EVERYONE CREATE YOUR ROUTES FROM HERE
 
-
+app.use('/api/users', userRoutes);
 
 app.use(notFound);
 
