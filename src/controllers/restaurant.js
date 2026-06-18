@@ -64,8 +64,39 @@ const getRestaurantById = async (req, res) => {
   }
 };
 
+
+const updateRestaurant = async (req, res) => {
+  let sendRes = {
+    success: false,
+    message: "Something went wrong",
+    data: null,
+  };
+  try {
+    if (!req.params.id) {
+      sendRes.message = "ID is required";
+      return res.status(400).send(sendRes);
+    }
+    const restaurant = await Restaurant.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    if (!restaurant) {
+      sendRes.message = "Restaurant not found";
+      return res.status(404).send(sendRes);
+    }
+    sendRes.success = true;
+    sendRes.message = "Restaurant updated successfully";
+    sendRes.data = restaurant;
+    return res.status(200).send(sendRes);
+  } catch (error) {
+    console.log("Error in updating restaurant", error);
+    return res.status(500).send(sendRes);
+  }
+};
+
 module.exports = {
     createRestaurant,
     getRestaurants,
-    getRestaurantById
+    getRestaurantById,
+    updateRestaurant
 };
