@@ -3,6 +3,7 @@ const route = express.Router()
 const hotelControllers = require("../controllers/hotel")
 
 route.post("/add", hotelControllers.addHotel)
+route.get("/list", hotelControllers.getHotels)
 
 
 

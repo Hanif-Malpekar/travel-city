@@ -1,13 +1,15 @@
 const Hotel = require("../models/Hotel")
+const City = require("../models/City")
+const Country = require("../models/Country")
+const Mosque = require("../models/Mosque")
 
 const addHotel = async (req, res) => {
-    try {
-        sendRes = {
+     sendRes = {
         "success": false,
         "message": "Something went wrong",
         "data": {}
     }
-
+    try {
     let hotelDetails = req.body
     if(!hotelDetails || !hotelDetails.name || !hotelDetails.city || !hotelDetails.country){
         sendRes.message = "Kindly fill up the required fields"
@@ -59,4 +61,31 @@ const addHotel = async (req, res) => {
     
 }
 
-module.exports = {addHotel}
+const getHotels = async (req,res)=>{
+    sendRes = {
+        "success": false,
+        "message": "Something went wrong",
+        "data": {}
+    }
+    try {
+        const hotelList = await Hotel.find()
+        .populate('city')
+        .populate('country')
+        .populate('nearbyMosques.mosque')
+
+        sendRes.success = true
+        sendRes.message = "Here is the list of Hotels"
+        sendRes.data = hotelList
+
+        res.status(200).send(sendRes)
+    } catch (error) {
+        console.log("Error in listing hotels",error);
+        return res.status(500).send(sendRes)
+        
+    }
+}
+
+module.exports = {
+    addHotel,
+    getHotels
+}

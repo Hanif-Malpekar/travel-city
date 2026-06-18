@@ -14,7 +14,7 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
-app.use("/hotel", hotelRoutes)
+app.use("/api/hotels", hotelRoutes)
 
 app.get('/check', (req, res) => {
   res.json({
