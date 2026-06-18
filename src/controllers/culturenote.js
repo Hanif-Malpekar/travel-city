@@ -141,11 +141,30 @@ const updateCultureNote = async (req, res) => {
             data: null
         });
     }
+}
+const deleteCultureNote = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const noteDbRes = await Note.findByIdAndDelete(id)
+
+       if (noteDbRes){
+        sendRes.error = false
+        sendRes.message = "Culture Note Deleted successfully!"
+        sendRes.data = noteDbRes
+
+        return res.status(200).send(sendRes)
+       }
+    } catch (error) {
+        console.log("Errro in getting C Note", error)
+        return res.status(500).send(sendRes)
+    }
 };
+
 
 module.exports = {
     createCultureNote,
     getCultureNote,
     getCultureNoteById,
     updateCultureNote,
+    deleteCultureNote
 }
