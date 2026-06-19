@@ -51,6 +51,9 @@ app.use("/api/cities", cityRoutes);
 const placeRoutes = require("./src/routes/Place")
 app.use("/api/places", placeRoutes);
 
+const itineraryRoutes = require("./src/routes/TravelItinerary")
+app.use("/api/travel-itineraries", itineraryRoutes);
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
