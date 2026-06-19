@@ -3,12 +3,19 @@ require('./src/models/db');
 require('./src/models/Country');
 require('./src/models/City');
 require('./src/models/Mosque');
+const countryRoutes = require('./src/routes/country');
+
+const travelExpenseRoutes = require("./src/routes/travelExpenseRoutes")
+const authRoutes = require("./src/routes/authRoutes")
 
 const express = require('express');
+const hotelRoutes = require("./src/routes/hotel")
 const cors = require('cors');
 const morgan = require('morgan');
 const notFound = require('./src/middlewares/notFound');
 const mosqueRoutes = require("./src/routes/mosque")
+const restaurantRoutes = require("./src/routes/restaurant");
+const cityRoutes = require("./src/routes/city");
 
 const app = express();
 
@@ -16,6 +23,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
+
+app.use('/api/countries', countryRoutes);
+app.use("/api/hotels", hotelRoutes)
 
 app.get('/check', (req, res) => {
   res.json({
@@ -36,6 +46,12 @@ app.get('/api/health', (req, res) => {
 app.use("/api/mosque",mosqueRoutes)
 
 app.use(notFound);
+app.use("/api/restaurants", restaurantRoutes);
+app.use("/api/cities", cityRoutes);
+
+
+const placeRoutes = require("./src/routes/Place")
+app.use("/api/places", placeRoutes);
 
 const PORT = process.env.PORT || 5000;
 
