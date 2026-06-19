@@ -1,4 +1,6 @@
 const Mosque = require("../models/Mosque");
+const City = require("../models/City")
+const Country = require("../models/Country")
 const mongoose = require("mongoose");
 
 let sendRes = {

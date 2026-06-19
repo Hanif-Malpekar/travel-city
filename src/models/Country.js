@@ -46,9 +46,7 @@ const countrySchema = new mongoose.Schema(
       default: 'medium',
     },
   },
-  { timestamps: true,
-    collection: "country"
-   }
+  { timestamps: true}
 );
 
 module.exports = mongoose.model('Country', countrySchema);

@@ -1,7 +1,4 @@
-const mongoose = require('./db');
-require("./City");
-require("./Country");
-
+const mongoose = require('./db'); 
 const mosqueSchema = new mongoose.Schema(
   {
     name: {
