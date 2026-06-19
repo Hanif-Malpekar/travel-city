@@ -135,5 +135,37 @@ const getItineraryById = async (req, res) => {
   }
 };
 
+const updateItineraryById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const updateData = req.body;
 
-module.exports ={addItinerary, getItinerary, getItineraryById}
+    let updated = await TravelItinerary.findByIdAndUpdate(
+      id,
+      { $set: updateData },
+      { new: true }
+    )
+      .populate("user")
+      .populate("country")
+      .populate("cities")
+      .populate("days.city");
+
+    if (!updated) {
+      return res.status(404).send({
+        success: false,
+        message: "Itinerary not found",
+      });
+    }
+
+    return res.status(200).send({
+      success: true,
+      message: "Itinerary updated successfully!"
+    });
+
+  } catch (error) {
+    console.log("Error in update itinerary", error);
+    return res.status(500).send({ success: false, message: "Server error" });
+  }
+};
+
+module.exports ={addItinerary, getItinerary, getItineraryById, updateItineraryById }
