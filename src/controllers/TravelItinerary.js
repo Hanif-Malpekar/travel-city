@@ -168,4 +168,28 @@ const updateItineraryById = async (req, res) => {
   }
 };
 
-module.exports ={addItinerary, getItinerary, getItineraryById, updateItineraryById }
+const deleteItineraryById = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    let deleted = await TravelItinerary.findByIdAndDelete(id);
+
+    if (!deleted) {
+      return res.status(404).send({
+        success: false,
+        message: "Itinerary not found",
+      });
+    }
+
+    return res.status(200).send({
+      success: true,
+      message: "Itinerary deleted successfully!",
+    });
+
+  } catch (error) {
+    console.log("Error in delete itinerary", error);
+    return res.status(500).send({ success: false, message: "Server error" });
+  }
+};
+
+module.exports ={addItinerary, getItinerary, getItineraryById, updateItineraryById,deleteItineraryById }
