@@ -164,9 +164,95 @@ const getVisaInfoById = async (req, res) => {
         return res.status(500).send(giveRes)
     }
 }
+const updateVisaInfo = async (req, res) => {
+
+    let giveRes = {
+        success: false,
+        message: "Something went wrong",
+        data: null
+    }
+
+    try {
+
+        let visaDetails = req.body
+
+        if (!visaDetails || !visaDetails._id) {
+
+            giveRes.message = "Visa Info ID Required"
+
+            return res.status(400).send(giveRes)
+        }
+
+        let updateVisaInfoData = {}
+
+        if (visaDetails.country) {
+            updateVisaInfoData.country = visaDetails.country
+        }
+
+        if (visaDetails.passportCountry) {
+            updateVisaInfoData.passportCountry = visaDetails.passportCountry
+        }
+
+        if (visaDetails.visaType) {
+            updateVisaInfoData.visaType = visaDetails.visaType
+        }
+
+        if (visaDetails.applicationMode) {
+            updateVisaInfoData.applicationMode = visaDetails.applicationMode
+        }
+
+        if (visaDetails.documentsRequired) {
+            updateVisaInfoData.documentsRequired = visaDetails.documentsRequired
+        }
+
+        if (visaDetails.processingTime) {
+            updateVisaInfoData.processingTime = visaDetails.processingTime
+        }
+
+        if (visaDetails.fee) {
+            updateVisaInfoData.fee = visaDetails.fee
+        }
+
+        if (visaDetails.officialWebsite) {
+            updateVisaInfoData.officialWebsite = visaDetails.officialWebsite
+        }
+
+        if (visaDetails.notes) {
+            updateVisaInfoData.notes = visaDetails.notes
+        }
+
+        let visaInfoDbRes = await VisaInfo.findByIdAndUpdate(
+            visaDetails._id,
+            updateVisaInfoData,
+            { new: true }
+        )
+
+        if (!visaInfoDbRes) {
+
+            giveRes.message = "Visa Info Not Found"
+
+            return res.status(404).send(giveRes)
+        }
+
+        giveRes.success = true
+        giveRes.message = "Visa Info Updated Successfully!"
+        giveRes.data = visaInfoDbRes
+
+        return res.status(200).send(giveRes)
+
+    } catch (error) {
+
+        console.log("Error in updating Visa Info", error)
+
+        giveRes.message = error.message
+
+        return res.status(500).send(giveRes)
+    }
+}
 
 module.exports = {
     addVisaInfo,
     getVisaInfo,
-    getVisaInfoById
+    getVisaInfoById,
+    updateVisaInfo
 }
