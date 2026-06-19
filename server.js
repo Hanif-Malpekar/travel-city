@@ -8,6 +8,8 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const notFound = require('./src/middlewares/notFound');
+const cityRoutes = require("./src/routes/city");
+
 
 const app = express();
 
@@ -37,9 +39,11 @@ app.use("/api/travel-expenses", travelExpenseRoutes)
 
 app.use("/api/auth", authRoutes)
 
+app.use("/api/cities", cityRoutes);
 
 
-app.use(notFound);
+const placeRoutes = require("./src/routes/Place")
+app.use("/api/places", placeRoutes);
 
 const PORT = process.env.PORT || 5000;
 
