@@ -1,6 +1,5 @@
 const LocalGuide = require('../models/LocalGuide')
-const City = require('../models/City')
-const User = require('../models/User')
+
 // add
 const addLocalGuide = async (req, res) => {
     try {

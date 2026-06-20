@@ -205,7 +205,7 @@ const deletePlaceById = async (req, res) => {
             filterPlace._id = id
         }
 
-        console.log("bbbbbbbb", filterPlace )
+        console.log("bbbbbbbb", filterPlace)
 
         let placeDbRes = await Place.deleteOne(filterPlace)
 

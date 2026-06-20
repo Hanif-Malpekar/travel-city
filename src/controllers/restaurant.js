@@ -124,9 +124,9 @@ const deleteRestaurant = async (req, res) => {
 
 
 module.exports = {
-    createRestaurant,
-    getRestaurants,
-    getRestaurantById,
-    updateRestaurant,
-    deleteRestaurant
+  createRestaurant,
+  getRestaurants,
+  getRestaurantById,
+  updateRestaurant,
+  deleteRestaurant
 };

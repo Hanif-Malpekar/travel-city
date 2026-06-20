@@ -192,4 +192,4 @@ const deleteItineraryById = async (req, res) => {
   }
 };
 
-module.exports ={addItinerary, getItinerary, getItineraryById, updateItineraryById,deleteItineraryById }
+module.exports = { addItinerary, getItinerary, getItineraryById, updateItineraryById, deleteItineraryById }

@@ -1,7 +1,7 @@
-const Note = require("../models/CultureNote")
+const CultureNote = require("../models/CultureNote")
 
 let sendRes = {
-    success : true,
+    success: true,
     message: 'success',
     data: {}
 }
@@ -19,7 +19,7 @@ const createCultureNote = async (req, res) => {
         let createnote = {
             title: noteDetails.title,
             country: noteDetails.country,
-            content : noteDetails.content
+            content: noteDetails.content
 
         }
 
@@ -34,7 +34,7 @@ const createCultureNote = async (req, res) => {
             createnote.tags = noteDetails.tags
         }
 
-        let noteDbRes = await Note.create(createnote)
+        let noteDbRes = await CultureNote.create(createnote)
 
         if (noteDbRes) {
             sendRes.error = false
@@ -43,14 +43,14 @@ const createCultureNote = async (req, res) => {
             return res.status(200).send(sendRes)
         }
     } catch (error) {
-    console.log("Errro in adding CultureNote", error)
+        console.log("Errro in adding CultureNote", error)
 
-    return res.status(500).send({
-        success: false,
-        message: error.message,
-        data: null
-    })
-}
+        return res.status(500).send({
+            success: false,
+            message: error.message,
+            data: null
+        })
+    }
 }
 const getCultureNote = async (req, res) => {
     try {
@@ -64,7 +64,7 @@ const getCultureNote = async (req, res) => {
             filternote.country = noteDetails.country
         }
 
-        let noteDbRes = await Note.find(filternote)
+        let noteDbRes = await CultureNote.find(filternote)
 
         sendRes.message = "Culture Note fetched successfully!"
         sendRes.data = noteDbRes
@@ -79,7 +79,7 @@ const getCultureNote = async (req, res) => {
 const getCultureNoteById = async (req, res) => {
     try {
         const id = req.params.id;
-        const noteDbRes = await Note.findById(id);
+        const noteDbRes = await CultureNote.findById(id);
 
         if (!noteDbRes) {
             return res.status(404).send({
@@ -111,10 +111,10 @@ const updateCultureNote = async (req, res) => {
         const noteId = req.params.id;
         const data = req.body;
 
-        const noteDbRes = await Note.findByIdAndUpdate(noteId,data,
+        const noteDbRes = await CultureNote.findByIdAndUpdate(noteId, data,
             {
-                new: true,          
-                runValidators: true 
+                new: true,
+                runValidators: true
             }
         );
 
@@ -145,15 +145,15 @@ const updateCultureNote = async (req, res) => {
 const deleteCultureNote = async (req, res) => {
     try {
         const id = req.params.id;
-        const noteDbRes = await Note.findByIdAndDelete(id)
+        const noteDbRes = await CultureNote.findByIdAndDelete(id)
 
-       if (noteDbRes){
-        sendRes.error = false
-        sendRes.message = "Culture Note Deleted successfully!"
-        sendRes.data = noteDbRes
+        if (noteDbRes) {
+            sendRes.error = false
+            sendRes.message = "Culture Note Deleted successfully!"
+            sendRes.data = noteDbRes
 
-        return res.status(200).send(sendRes)
-       }
+            return res.status(200).send(sendRes)
+        }
     } catch (error) {
         console.log("Errro in getting C Note", error)
         return res.status(500).send(sendRes)
